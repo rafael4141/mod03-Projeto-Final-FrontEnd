@@ -1,46 +1,3 @@
-class User {
-  userUrl = "http://localhost:3001/user";
-  fetchFind = (user) => {
-    return fetch(this.userUrl, {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    });
-  };
-
-  fetchFindID = async () => {
-    return fetch(`${this.userUrl}/id`);
-  };
-
-  fetchPost = (user) => {
-    return fetch(`${this.userUrl}/create`, {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    });
-  };
-
-  fetchPut = (user) => {
-    return fetch(`${this.userUrl}/update`, {
-      method: "PUT",
-      body: JSON.stringify(user),
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    });
-  };
-
-  fetchDelete = () => {
-    return fetch(`${this.userUrl}/delete`, {
-      method: "DELETE",
-    });
-  };
-}
-
 class List {
   listUrl = "http://localhost:3001/list"
   findAll = async () => {
@@ -78,4 +35,4 @@ class List {
   };
 }
 
-export default { User, List };
+export default List;
