@@ -9,7 +9,7 @@ class List {
   }
 
   create = async (list) => {
-    return fetch(`${this.userUrl}/create`, {
+    return fetch(`${this.listUrl}/create`, {
       method: "POST",
       body: JSON.stringify(list),
       headers: new Headers({
@@ -18,8 +18,8 @@ class List {
     });
   };
 
-  edit = async (id, list) => {
-    return fetch(`${this.userUrl}/update/${id}`, {
+  edit = async (list, id) => {
+    return fetch(`${this.listUrl}/update/${id}`, {
       method: "PUT",
       body: JSON.stringify(list),
       headers: new Headers({
@@ -29,7 +29,8 @@ class List {
   }
 
   delete = async (id) => {
-    return fetch(`${this.userUrl}/delete/${id}`, {
+    console.log(`${this.listUrl}/delete/${id}`)
+    return fetch(`${this.listUrl}/delete/${id}`, {
       method: "DELETE",
     });
   };

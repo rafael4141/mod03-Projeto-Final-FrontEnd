@@ -11,7 +11,6 @@ const List = () => {
   const getList = async () => {
     const request = await fetch('http://localhost:3001/list')
     const data = await request.json();
-    console.log(data.list)
     setList(data.list);
   }
 

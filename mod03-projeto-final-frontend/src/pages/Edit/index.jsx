@@ -1,41 +1,51 @@
-import React from "react";
-import List from "../../api/api.js";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import List from "../../api/api";
+import "./styles.css"
 
-const Registration = () => {
+const Edit = () => {
   const navigate = useNavigate();
-  const submitForm = async (event) => {
-    event.preventDefault();
-    const title = event.target.title.value;
-    const priority = event.target.priority.value;
-    const status = event.target.status.value;
-    const deadline = event.target.deadline.value;
-    const list = new List();
+  const [list, setList] = useState({
+    title: "",
+    priority: "",
+    status: "",
+    deadline: "",
+  });
 
-    const data = {
-      title: title,
-      priority: priority,
-      status: status,
-      deadline: deadline,
-    };
+  const ClassList = new List();
 
-    const request = await list.create(data);
-    const result = await request.json();
-    console.log(result)
-    if (request.status === 500) {
-      alert("Erro no servidor! Tente novamente.");
-    }
-    if (result.success) {
-      navigate("/");
-    } else {
-      alert("Não foi possivel criar a tarefa. Tente novamente.");
-    }
+  useEffect(() => {
+    getListById();
+  }, []);
+
+  const { id } = useParams();
+
+  const getListById = async () => {
+    const request = await ClassList.findId(id);
+    const data = await request.json();
+    setList(data.list);
+  };
+
+  const handleFieldsChange = (evento) => {
+    const listEdit = { ...list };
+    listEdit[evento.target.name] = evento.target.value;
+    setList(listEdit);
+  };
+
+  const handleSubmit = async (evento) => {
+    evento.preventDefault();
+    const request = await ClassList.edit(list, id);
+    const data = await request.json();
+    alert(data.message);
+    navigate(`/view/${id}`);
   };
 
   return (
     <main className="container-fluid">
-      <h2>Cadastrar tarefa</h2>
-      <form onSubmit={submitForm} id="form">
+    <div>
+        <h2 id="title">Edição da tarefa</h2>
+    </div>
+      <form onSubmit={handleSubmit} id="form">
         <div className="mb-3 col-5">
           <label htmlFor="title" className="form-label">
             Nome da Tarefa:
@@ -100,4 +110,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default Edit;

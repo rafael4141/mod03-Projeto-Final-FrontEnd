@@ -3,23 +3,12 @@ import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "react-responsive-modal";
 import "react-responsive-modal/styles.css";
-import Api from "../../api/api";
+import List from "../../api/api";
 
 const View = () => {
-  const List = new Api.List();
+  const list = new List();
   const [lists, setList] = useState([]);
 
-  // useEffect(() => {
-  //   getList();
-  // }, [])
-
-  // const getList = async () => {
-  //   const request = await fetch('http://localhost:3001/list')
-  //   const data = await request.json();
-  //   console.log(data.list)
-  //   setList(data.list);
-  // }
-  // crio o estado de abertura do modal;
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -36,25 +25,21 @@ const View = () => {
 
   // acessa o id no parametro da url;
   const { id } = useParams();
-  console.log(id);
 
   // faz a chamada para a api passando o id como parametro para buscar o objeto da musica (invidual por id)
   const getListById = async () => {
-    const request = await List.findId(id);
+    const request = await list.findId(id);
     const data = await request.json();
     setList(data.list);
   };
-  console.log(lists);
 
   const handleDelete = async () => {
-    const response = await List.delete(id);
+    const response = await list.delete(id);
     const data = await response.json();
-    if (data.message) {
-      console.log("excluido", data.message);
+    if (data.success) {
+      console.log("excluido");
       navigate("/");
-    } else {
-      alert(data.error);
-    }
+    } 
   };
 
   return (
