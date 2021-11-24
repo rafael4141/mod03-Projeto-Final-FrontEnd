@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../Card';
-import List from "../../../api/api"
+import Api from "../../../api/api"
 
 const List = () => {
-  const list = new List();
+  const list = new Api();
   const [lists, setList] = useState([]);
 
   useEffect(() => {
