@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../Card';
+import List from "../../../api/api"
 
 const List = () => {
+  const list = new List();
   const [lists, setList] = useState([]);
 
   useEffect(() => {
@@ -9,7 +11,7 @@ const List = () => {
   }, [])
 
   const getList = async () => {
-    const request = await fetch('http://localhost:3001/list')
+    const request = await list.findAll();
     const data = await request.json();
     setList(data.list);
   }
