@@ -103,7 +103,7 @@ const Edit = () => {
           />
         </div>
         <button type="submit" class="btn btn-dark">
-          Cadastrar
+          Alterar
         </button>
       </form>
     </main>
