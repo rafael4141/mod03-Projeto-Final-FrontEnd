@@ -1,5 +1,5 @@
 class List {
-  listUrl = "http://localhost:3001/list"
+  listUrl = "https://back-end-mod03.herokuapp.com/list"
   findAll = async () => {
     return await fetch(this.listUrl)
   }
