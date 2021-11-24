@@ -5,38 +5,24 @@ import "./styles.css"
 
 const Edit = () => {
   const navigate = useNavigate();
-  const [list, setList] = useState({
-    title: "",
-    priority: "",
-    status: "",
-    deadline: "",
-  });
-
-  const ClassList = new List();
-
-  useEffect(() => {
-    getListById();
-  }, []);
-
   const { id } = useParams();
 
-  const getListById = async () => {
-    const request = await ClassList.findId(id);
-    const data = await request.json();
-    setList(data.list);
-  };
+  const Submit = async (event) => {
+    event.preventDefault();
+    const title = event.target.title.value;
+    const priority = event.target.priority.value;
+    const status = event.target.status.value;
+    const deadline = event.target.deadline.value;
+    const list = new List();
 
-  const handleFieldsChange = (evento) => {
-    const listEdit = { ...list };
-    listEdit[evento.target.name] = evento.target.value;
-    setList(listEdit);
-  };
+    const data = {
+      title: title,
+      priority: priority,
+      status: status,
+      deadline: deadline,
+    };
 
-  const handleSubmit = async (evento) => {
-    evento.preventDefault();
-    const request = await ClassList.edit(list, id);
-    const data = await request.json();
-    alert(data.message);
+    const request = await list.edit(data, id);
     navigate(`/view/${id}`);
   };
 
@@ -45,7 +31,7 @@ const Edit = () => {
     <div>
         <h2 id="title">Edição da tarefa</h2>
     </div>
-      <form onSubmit={handleSubmit} id="form">
+      <form onSubmit={Submit} id="form">
         <div className="mb-3 col-5">
           <label htmlFor="title" className="form-label">
             Nome da Tarefa:
@@ -69,9 +55,9 @@ const Edit = () => {
             aria-label="Default select example"
           >
             <option selected>Selecione</option>
-            <option value="Alta">Alta</option> // Alta, Média e Baixa
-            <option value="Média">Média</option>
-            <option value="Baixa">Baixa</option>
+            <option defaultValue="Alta">Alta</option> // Alta, Média e Baixa
+            <option defaultValue="Média">Média</option>
+            <option defaultValue="Baixa">Baixa</option>
           </select>
         </div>
         <div className="mb-3 col-5">
@@ -84,9 +70,9 @@ const Edit = () => {
             aria-label="Default select example"
           >
             <option selected>Selecione</option>
-            <option value="Fazer">Fazer</option> // Fazer, Fazendo, Feito
-            <option value="Fazendo">Fazendo</option>
-            <option value="Feito">Feito</option>
+            <option defaultValue="Fazer">Fazer</option> // Fazer, Fazendo, Feito
+            <option defaultValue="Fazendo">Fazendo</option>
+            <option defaultValue="Feito">Feito</option>
           </select>
         </div>
         <div className="mb-3 col-5">
